@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- <app-header v-bind:프롭스 속성 이름="상위 컴포넌트의 데이터 이름"></app-header> -->
+    <!-- v-bind = element의 속성(상태)를 바꿀때 사용 jquery에서 attr이랑 비슷함-->
+    <!-- https://yamea-guide.tistory.com/entry/VUEJS-%EB%B7%B0-%EB%94%94%EB%A0%89%ED%8B%B0%EB%B8%8C-v-bind-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0 -->
+    
+    <app-header v-bind:propsdata="message"></app-header> 
+    <app-content v-bind:propsdata="num"></app-content>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    var appHeader = { //변수로 선언
+      template: '<h1>{{ propsdata }}</h1>', // 데이터 바인딩 이경우에는 상위 컴포넌트의 message 값이 출력됨
+      props: ['propsdata']
+    }
+    var appContent = {
+      template: '<div>{{ propsdata }}</div>',
+      props: ['propsdata']
+    }
+
+    new Vue({
+      el: '#app',
+      components: {
+        'app-header': appHeader,
+        'app-content': appContent
+      },
+      data: {
+        message: 'hi',
+        num: 10
+      }
+    })
+  </script>
+</body>
+</html>

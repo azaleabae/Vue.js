@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <app-header v-bind:propsdata="num"></app-header>
+    <app-content v-on:pass="deliverNum"></app-content>
+    <!-- app-content라는 하위 컴포넌트의 pass이벤트를 v-on으로 받기 -->
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    var appHeader = {
+      template: '<div>header</div>',
+      props: ['propsdata']
+    }
+    var appContent = {
+      template: '<div>content<button v-on:click="passNum">pass</button></div>',
+      methods: {
+        passNum: function() {
+          this.$emit('pass', 10); //  appContent에서 버튼 pass를 누르면 이벤트를 발생시켜 root에 10이란 값을 전송해라
+        }
+      }
+    }
+
+    new Vue({
+      el: '#app',
+      components: {
+        'app-header': appHeader,
+        'app-content': appContent
+      },
+      data: {
+        num: 0 // 루트에 데이터(num) 값을 선언해줘야함
+            },
+      methods: {
+        deliverNum: function(value) { // content에서 넘어온 pass값이 10 이니까 value값이 10으로 바뀜
+          this.num = value;
+        }
+      }
+    })
+  </script>
+</body>
+</html>
